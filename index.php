@@ -38,6 +38,3 @@ if ($result) {
 
     print "В БД добавлено $i новых строк";
 }
-
-print '<br>';
-print memory_get_peak_usage(true);
