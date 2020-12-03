@@ -27,12 +27,17 @@ if ($result) {
     $i=0;
     foreach ($result as $value) {
         $hash = md5($value);
-        $result = $db->getOne("SELECT id FROM `content` WHERE `hash` = ?s ", $hash);
-        if (!$result) {
-            $db->query("INSERT INTO `content` SET `content` = ?s, `hash` = ?s ", $value, $hash);
-            $i++;
-        }    
+        // $result = $db->getOne("SELECT id FROM `content` WHERE `hash` = ?s ", $hash);
+        // if (!$result) {
+            // $db->query("INSERT INTO `content` SET `content` = ?s, `hash` = ?s ", $value, $hash);
+            // $i++;
+        // }
+        $db->query("INSERT IGNORE INTO `content` SET `content` = ?s, `hash` = ?s ", $value, $hash);
+        $i += $db->affectedRows();
     }
 
     print "В БД добавлено $i новых строк";
 }
+
+print '<br>';
+print memory_get_peak_usage(true);
